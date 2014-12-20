@@ -3,9 +3,50 @@ use 5.008005;
 use strict;
 use warnings;
 
+use Carp ();
+
 our $VERSION = "0.01";
 
+sub prompt {
+    my $message = shift;
+    unless ($message) {
+        Carp::croak(q["prompt" called without any argument!]);
+    }
+    my %opt = _parse_args(@_);
 
+    my $isa_tty = -t STDIN && (-t STDOUT || !(-f STDOUT || -c STDOUT)) ;
+
+    my $default_answer = exists $opt{default_answer} ? $opt{default_answer} : q{};
+    my $dispdef = $default_answer ? "[$default_answer]" : q{ };
+
+    local $| = 1;
+    local $\;
+    print "$message $dispdef";
+
+    my $answer;
+    if ($ENV{PERL_MM_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
+        print "$default_answer\n";
+    } else {
+        $answer = <STDIN>;
+        if (defined $answer) {
+            chomp $answer;
+        } else {    # user hit ctrl-D
+            print "\n";
+        }
+    }
+
+    $answer = defined $answer ? $answer : q{};
+    return $answer || $default_answer;
+}
+
+sub _parse_args {
+    my %opt;
+    if (@_ % 2 == 1) {
+        $opt{default_answer} = shift;
+    }
+    %opt = (%opt, @_);
+    return %opt;
+}
 
 1;
 __END__

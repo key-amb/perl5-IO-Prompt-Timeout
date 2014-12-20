@@ -3,6 +3,9 @@ use 5.006;
 use strict;
 use warnings;
 
+use parent qw(Exporter);
+our @EXPORT_OK = qw(prompt);
+
 use Carp ();
 
 our $VERSION = "0.01";

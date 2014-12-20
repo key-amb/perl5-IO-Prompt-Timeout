@@ -2,11 +2,11 @@ use strict;
 use warnings;
 use Test::More;
 
-use IO::Prompt::Timeout;
+use IO::Prompt::Timeout qw(prompt);
 
 subtest 'Dies when no argument.' => sub {
     eval {
-        IO::Prompt::Timeout::prompt();
+        prompt();
     };
     ok($@, 'died');
 };
@@ -15,7 +15,7 @@ subtest 'Given default.' => sub {
     my $message = 'prompt';
     my $default = 'yes';
     local $ENV{PERL_MM_USE_DEFAULT} = 1;
-    my $result = IO::Prompt::Timeout::prompt($message, $default);
+    my $result = prompt($message, $default);
     is($result, $default, 'default taken');
 };
 

@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Simple prompt interface with timeout.",
    "author" : [
       "YASUTAKE Kiyoshi <yasutake.kiyoshi@gmail.com>"
    ],
@@ -43,7 +43,7 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008005"
+            "perl" : "5.008001"
          }
       },
       "test" : {
@@ -53,5 +53,16 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/key-amb/perl5-IO-Prompt-Timeout/issues"
+      },
+      "homepage" : "https://github.com/key-amb/perl5-IO-Prompt-Timeout",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/key-amb/perl5-IO-Prompt-Timeout.git",
+         "web" : "https://github.com/key-amb/perl5-IO-Prompt-Timeout"
+      }
+   },
    "version" : "0.01"
 }

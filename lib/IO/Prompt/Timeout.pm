@@ -12,7 +12,7 @@ use Carp ();
 our $VERSION = "0.01";
 
 my $HAS_TIMED_OUT;
-my $DEFAULT_TIMEOUT_SEC = 30;
+my $DEFAULT_TIMEOUT_SEC = 60;
 
 sub prompt {
     my $message = shift;

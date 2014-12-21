@@ -32,7 +32,7 @@ sub prompt {
     if ($ENV{PERL_MM_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
         print "$default_answer\n";
     } else {
-        local $SIG{ALRM} = sub { die 'Prompt timed out.' };
+        local $SIG{ALRM} = sub { Carp::croak('Prompt timed out.') };
         my $timeout = $opt{timeout} || $DEFAULT_TIMEOUT_SEC;
         alarm $timeout;
         $answer = <STDIN>;

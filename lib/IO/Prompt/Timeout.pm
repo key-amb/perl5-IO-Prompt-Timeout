@@ -113,6 +113,17 @@ Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
 The function of clearing timer by a single key click is not supported which is
 implemented in Prompt::Timeout.
 
+=head1 ENVIRONMENT VARIABLES
+
+=over 4
+
+=item B<$ENV{PERL_IOPT_USE_DEFAULT}>
+
+If set true, I<prompt> will always return the default answer without waiting for
+user input.
+
+=back
+
 =head1 KNOWN ISSUES
 
 =over 4

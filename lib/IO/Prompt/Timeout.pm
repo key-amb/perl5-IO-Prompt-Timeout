@@ -4,12 +4,14 @@ use strict;
 use warnings;
 
 use parent qw(Exporter);
-our @EXPORT_OK = qw(prompt);
+our @EXPORT_OK = qw(prompt has_timed_out);
+our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 use Carp ();
 
 our $VERSION = "0.01";
 
+my $HAS_TIMED_OUT;
 my $DEFAULT_TIMEOUT_SEC = 30;
 
 sub prompt {
@@ -17,6 +19,10 @@ sub prompt {
     unless ($message) {
         Carp::croak(q["prompt" called without any argument!]);
     }
+
+    # Clear timeout info.
+    undef $HAS_TIMED_OUT;
+
     my %opt = _parse_args(@_);
 
     my $isa_tty = -t STDIN && (-t STDOUT || !(-f STDOUT || -c STDOUT)) ;
@@ -32,14 +38,26 @@ sub prompt {
     if ($ENV{PERL_IOPT_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
         print "$default_answer\n";
     } else {
-        local $SIG{ALRM} = sub { Carp::croak('Prompt timed out.') };
+        my $alarm_error = "__ALARM__\n";
+        local $SIG{ALRM} = sub { die $alarm_error; };
         my $timeout = $opt{timeout} || $DEFAULT_TIMEOUT_SEC;
-        alarm $timeout;
-        $answer = <STDIN>;
-        alarm 0;
+        eval {
+            alarm $timeout;
+            $answer = <STDIN>;
+            alarm 0;
+        };
+        if ($@) {
+            unless ($@ eq $alarm_error) {
+                Carp::croak("Unexpected error while waiting prompt input! ERROR:$@");
+            }
+            $HAS_TIMED_OUT = 1;
+        }
+
         if (defined $answer) {
             chomp $answer;
-        } else {    # user hit ctrl-D
+        } else {
+            # User hit ctrl-D
+            # Or timed out.
             print "\n";
         }
     }
@@ -47,6 +65,8 @@ sub prompt {
     $answer = defined $answer ? $answer : q{};
     return $answer || $default_answer;
 }
+
+sub has_timed_out { $HAS_TIMED_OUT; }
 
 sub _parse_args {
     my %opt;

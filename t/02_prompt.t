@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 use Time::HiRes;
 
-use IO::Prompt::Timeout qw(prompt);
+use IO::Prompt::Timeout qw(:all);
 
 subtest 'Dies when no argument.' => sub {
     eval {
@@ -22,12 +22,10 @@ subtest 'Given default.' => sub {
 
 subtest 'Should time out.' => sub {
     my $before = Time::HiRes::time;
-    eval {
-        prompt('test', timeout => 1);
-    };
+    prompt('test', timeout => 1);
     my $after = Time::HiRes::time;
     my $lag = $after - $before;
-    ok($@, 'timed out.');
+    ok(has_timed_out(), 'timed out.');
     diag $lag;
     ok($lag > 0.5 && $lag < 1.5, 'timed out by specified time');
 

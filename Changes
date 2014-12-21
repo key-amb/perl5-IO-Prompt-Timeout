@@ -2,7 +2,9 @@ Revision history for Perl extension IO-Prompt-Timeout
 
 {{$NEXT}}
 
-0.01 2014-12-21T02:02:22Z
+0.02 2014-12-21T14:15:37Z
+    - Explicitly unsupport Windows.
 
-    - original version
+0.01 2014-12-21T02:02:22Z
+    - Initial release
 

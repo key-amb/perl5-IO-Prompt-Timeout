@@ -10,6 +10,8 @@ use Carp ();
 
 our $VERSION = "0.01";
 
+my $DEFAULT_TIMEOUT_SEC = 30;
+
 sub prompt {
     my $message = shift;
     unless ($message) {
@@ -30,7 +32,11 @@ sub prompt {
     if ($ENV{PERL_MM_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
         print "$default_answer\n";
     } else {
+        local $SIG{ALRM} = sub { die 'Prompt timed out.' };
+        my $timeout = $opt{timeout} || $DEFAULT_TIMEOUT_SEC;
+        alarm $timeout;
         $answer = <STDIN>;
+        alarm 0;
         if (defined $answer) {
             chomp $answer;
         } else {    # user hit ctrl-D

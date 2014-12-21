@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Time::HiRes;
 
 use IO::Prompt::Timeout qw(prompt);
 
@@ -17,6 +18,19 @@ subtest 'Given default.' => sub {
     local $ENV{PERL_MM_USE_DEFAULT} = 1;
     my $result = prompt($message, $default);
     is($result, $default, 'default taken');
+};
+
+subtest 'Should time out.' => sub {
+    my $before = Time::HiRes::time;
+    eval {
+        prompt('test', timeout => 2);
+    };
+    my $after = Time::HiRes::time;
+    my $lag = $after - $before;
+    ok($@, 'timed out.');
+    diag $lag;
+    ok($lag > 1.5 && $lag < 2.5, 'timed out by specified time');
+
 };
 
 done_testing;

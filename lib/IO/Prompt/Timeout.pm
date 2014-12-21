@@ -83,15 +83,38 @@ __END__
 
 =head1 NAME
 
-IO::Prompt::Timeout - It's new $module
+IO::Prompt::Timeout - Simple prompt interface with timeout.
 
 =head1 SYNOPSIS
 
-    use IO::Prompt::Timeout;
+    use IO::Prompt::Timeout qw(:all);
+    my $answer = prompt('Yes or No? (y/n)', %option);
+    my $is_timeout = has_timed_out();
+
+    # Specifying timeout seconds
+    my $answer = prompt('Yes or No? (y/n) Answer in 10 seconds.', timeout => 10);
+
+    # Specifying default answer
+    my $answer = prompt('Yes or No? (y/n)', default => 'n');
 
 =head1 DESCRIPTION
 
-IO::Prompt::Timeout is ...
+B<IO::Prompt::Timeout> provides I<prompt> subroutine most of which comes from
+L<ExtUtils::MakeMaker>.
+
+It also has timeout feature just like L<Prompt::Timeout>.
+The default timeout seconds is 60. When prompt timed out, the default answer
+can be taken when it's set by option.
+
+Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
+The function of clearing timer by a single key click is not supported which is
+implemented in Prompt::Timeout.
+
+=head1 SEE ALSO
+
+L<ExtUtils::MakeMaker>,
+L<IO::Prompt::Tiny>,
+L<Prompt::Timeout>
 
 =head1 LICENSE
 

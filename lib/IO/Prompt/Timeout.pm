@@ -69,12 +69,11 @@ sub prompt {
 sub has_timed_out { $HAS_TIMED_OUT; }
 
 sub _parse_args {
-    my %opt;
-    if (@_ % 2 == 1) {
-        $opt{default_answer} = shift;
-    }
-    %opt = (%opt, @_);
-    return %opt;
+    my %args = @_;
+    return (
+        default_answer => $args{default},
+        timeout        => $args{timeout},
+    );
 }
 
 1;

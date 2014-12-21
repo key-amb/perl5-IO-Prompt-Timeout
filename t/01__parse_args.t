@@ -4,18 +4,10 @@ use Test::More;
 
 use IO::Prompt::Timeout;
 
-subtest 'default_answer given as scalar' => sub {
-    my $default = 'yes';
-    my %parsed = IO::Prompt::Timeout::_parse_args($default);
-    is_deeply(\%parsed, +{ default_answer => $default }, 'ok');
-};
-
-subtest 'Copy given hash' => sub {
-    my %given = (
-        default_answer => 'yes',
-    );
-    my %parsed = IO::Prompt::Timeout::_parse_args(%given);
-    is_deeply(\%parsed, \%given, 'copied');
+subtest 'default answer' => sub {
+    my $answer = 'yes';
+    my %parsed = IO::Prompt::Timeout::_parse_args(default => $answer);
+    is($parsed{default_answer}, $answer, 'copied');
 };
 
 done_testing;

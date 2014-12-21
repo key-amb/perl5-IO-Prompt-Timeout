@@ -16,7 +16,7 @@ subtest 'Given default.' => sub {
     my $message = 'prompt';
     my $default = 'yes';
     local $ENV{PERL_IOPT_USE_DEFAULT} = 1;
-    my $result = prompt($message, $default);
+    my $result = prompt($message, default => $default);
     is($result, $default, 'default taken');
 };
 

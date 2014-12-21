@@ -15,6 +15,9 @@ my $HAS_TIMED_OUT;
 my $DEFAULT_TIMEOUT_SEC = 60;
 
 sub prompt {
+    if ($^O eq 'MSWin32') {
+        Carp::croak(q[Windows OS is not supported!]);
+    }
     my $message = shift;
     unless ($message) {
         Carp::croak(q["prompt" called without any argument!]);
@@ -109,6 +112,14 @@ can be taken when it's set by option.
 Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
 The function of clearing timer by a single key click is not supported which is
 implemented in Prompt::Timeout.
+
+=head1 KNOWN ISSUES
+
+=over 4
+
+=item $SIG{ALRM} is not supported on Windows OS. So this module won't work.
+
+=back
 
 =head1 SEE ALSO
 

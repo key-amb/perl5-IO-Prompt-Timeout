@@ -5,6 +5,12 @@ use Time::HiRes;
 
 use IO::Prompt::Timeout qw(:all);
 
+subtest 'Windows is not supported.' => sub {
+    local $^O = 'MSWin32';
+    eval { prompt('dummy'); };
+    ok($@, 'died');
+};
+
 subtest 'Dies when no argument.' => sub {
     eval {
         prompt();

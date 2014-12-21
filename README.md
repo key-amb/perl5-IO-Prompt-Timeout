@@ -27,6 +27,10 @@ Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
 The function of clearing timer by a single key click is not supported which is
 implemented in Prompt::Timeout.
 
+# KNOWN ISSUES
+
+- $SIG{ALRM} is not supported on Windows OS. So this module won't work.
+
 # SEE ALSO
 
 [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker),

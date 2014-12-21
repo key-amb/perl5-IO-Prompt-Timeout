@@ -113,6 +113,17 @@ Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
 The function of clearing timer by a single key click is not supported which is
 implemented in Prompt::Timeout.
 
+=head1 SUBROUTINES
+
+=head2 prompt : Answer(SCALAR)
+
+Show prompt and returns the answer by user's input.
+
+=head2 has_prompt_timed_out : BOOL
+
+Called after a I<prompt> call.
+Returns if I<prompt> subroutine has timed out or not.
+
 =head1 ENVIRONMENT VARIABLES
 
 =over 4

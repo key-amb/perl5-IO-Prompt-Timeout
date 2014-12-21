@@ -15,7 +15,7 @@ subtest 'Dies when no argument.' => sub {
 subtest 'Given default.' => sub {
     my $message = 'prompt';
     my $default = 'yes';
-    local $ENV{PERL_MM_USE_DEFAULT} = 1;
+    local $ENV{PERL_IOPT_USE_DEFAULT} = 1;
     my $result = prompt($message, $default);
     is($result, $default, 'default taken');
 };

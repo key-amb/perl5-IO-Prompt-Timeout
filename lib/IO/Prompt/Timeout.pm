@@ -29,7 +29,7 @@ sub prompt {
     print "$message $dispdef";
 
     my $answer;
-    if ($ENV{PERL_MM_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
+    if ($ENV{PERL_IOPT_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
         print "$default_answer\n";
     } else {
         local $SIG{ALRM} = sub { Carp::croak('Prompt timed out.') };

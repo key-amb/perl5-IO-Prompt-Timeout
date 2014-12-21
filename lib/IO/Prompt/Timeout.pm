@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use parent qw(Exporter);
-our @EXPORT_OK = qw(prompt has_timed_out);
+our @EXPORT_OK = qw(prompt has_prompt_timed_out);
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 use Carp ();
@@ -69,7 +69,7 @@ sub prompt {
     return $answer || $default_answer;
 }
 
-sub has_timed_out { $HAS_TIMED_OUT; }
+sub has_prompt_timed_out { $HAS_TIMED_OUT; }
 
 sub _parse_args {
     my %args = @_;
@@ -92,7 +92,7 @@ IO::Prompt::Timeout - Simple prompt interface with timeout.
 
     use IO::Prompt::Timeout qw(:all);
     my $answer = prompt('Yes or No? (y/n)', %option);
-    my $is_timeout = has_timed_out();
+    my $is_timeout = has_prompt_timed_out();
 
     # Specifying timeout seconds
     my $answer = prompt('Yes or No? (y/n) Answer in 10 seconds.', timeout => 10);

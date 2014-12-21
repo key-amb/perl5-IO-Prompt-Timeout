@@ -31,7 +31,7 @@ subtest 'Should time out.' => sub {
     prompt('test', timeout => 1);
     my $after = Time::HiRes::time;
     my $lag = $after - $before;
-    ok(has_timed_out(), 'timed out.');
+    ok(has_prompt_timed_out(), 'timed out.');
     diag $lag;
     ok($lag > 0.5 && $lag < 1.5, 'timed out by specified time');
 

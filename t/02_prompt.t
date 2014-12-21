@@ -23,13 +23,13 @@ subtest 'Given default.' => sub {
 subtest 'Should time out.' => sub {
     my $before = Time::HiRes::time;
     eval {
-        prompt('test', timeout => 2);
+        prompt('test', timeout => 1);
     };
     my $after = Time::HiRes::time;
     my $lag = $after - $before;
     ok($@, 'timed out.');
     diag $lag;
-    ok($lag > 1.5 && $lag < 2.5, 'timed out by specified time');
+    ok($lag > 0.5 && $lag < 1.5, 'timed out by specified time');
 
 };
 

@@ -3,6 +3,8 @@ use 5.008001;
 use strict;
 use warnings;
 
+use IO::Select;
+
 use parent qw(Exporter);
 our @EXPORT_OK = qw(prompt has_prompt_timed_out);
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
@@ -41,18 +43,13 @@ sub prompt {
     if ($ENV{PERL_IOPT_USE_DEFAULT} || (!$isa_tty && eof STDIN)) {
         print "$default_answer\n";
     } else {
-        my $alarm_error = "__ALARM__\n";
-        local $SIG{ALRM} = sub { die $alarm_error; };
         my $timeout = $opt{timeout} || $DEFAULT_TIMEOUT_SEC;
-        eval {
-            alarm $timeout;
-            $answer = <STDIN>;
-            alarm 0;
-        };
-        if ($@) {
-            unless ($@ eq $alarm_error) {
-                Carp::croak("Unexpected error while waiting prompt input! ERROR:$@");
-            }
+        my $is = IO::Select->new;
+        $is->add(\*STDIN);
+        if (my @readable = $is->can_read($timeout)) {
+            my $stdin = shift @readable;
+            $answer = <$stdin>;
+        } else {
             $HAS_TIMED_OUT = 1;
         }
 

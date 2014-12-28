@@ -103,7 +103,7 @@ It also has timeout feature just like L<Prompt::Timeout>.
 The default timeout seconds is 60. When prompt timed out, the default answer
 can be taken when it's set by option.
 
-Unlike Prompt::Timeout, this module uses simple $SIG{ALRM}.
+Unlike Prompt::Timeout, this module uses L<IO::Select> for timeout procedure.
 The function of clearing timer by a single key click is not supported which is
 implemented in Prompt::Timeout.
 
@@ -133,7 +133,8 @@ user input.
 
 L<ExtUtils::MakeMaker>,
 L<IO::Prompt::Tiny>,
-L<Prompt::Timeout>
+L<Prompt::Timeout>,
+L<IO::Select>
 
 =head1 LICENSE
 

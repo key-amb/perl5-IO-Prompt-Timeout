@@ -2,6 +2,9 @@ Revision history for Perl extension IO-Prompt-Timeout
 
 {{$NEXT}}
 
+0.04 2014-12-28T07:15:53Z
+    - use IO::Select for portability; especially for Windows.
+
 0.03 2014-12-21T15:32:24Z
     - has_prompt_timed_out (was has_timed_out)
 

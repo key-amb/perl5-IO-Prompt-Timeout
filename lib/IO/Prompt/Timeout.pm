@@ -11,7 +11,7 @@ our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 use Carp ();
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 my $HAS_TIMED_OUT;
 my $DEFAULT_TIMEOUT_SEC = 60;

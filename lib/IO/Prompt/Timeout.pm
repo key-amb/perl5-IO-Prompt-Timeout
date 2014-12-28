@@ -17,9 +17,6 @@ my $HAS_TIMED_OUT;
 my $DEFAULT_TIMEOUT_SEC = 60;
 
 sub prompt {
-    if ($^O eq 'MSWin32') {
-        Carp::croak(q[Windows OS is not supported!]);
-    }
     my $message = shift;
     unless ($message) {
         Carp::croak(q["prompt" called without any argument!]);
@@ -129,14 +126,6 @@ Returns if I<prompt> subroutine has timed out or not.
 
 If set true, I<prompt> will always return the default answer without waiting for
 user input.
-
-=back
-
-=head1 KNOWN ISSUES
-
-=over 4
-
-=item $SIG{ALRM} is not supported on Windows OS. So this module won't work.
 
 =back
 

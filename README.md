@@ -45,10 +45,6 @@ Returns if _prompt_ subroutine has timed out or not.
     If set true, _prompt_ will always return the default answer without waiting for
     user input.
 
-# KNOWN ISSUES
-
-- $SIG{ALRM} is not supported on Windows OS. So this module won't work.
-
 # SEE ALSO
 
 [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker),

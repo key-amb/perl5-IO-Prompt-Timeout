@@ -71,7 +71,7 @@ sub has_prompt_timed_out { $HAS_TIMED_OUT; }
 sub _parse_args {
     my %args = @_;
     return (
-        default_answer => $args{default},
+        default_answer => $args{default} || q{},
         timeout        => $args{timeout},
     );
 }
